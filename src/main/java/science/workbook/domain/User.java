@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Getter
 @Document(collection = "user")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -21,4 +23,7 @@ public class User {
     private String name;
     private String password;
     private UserType userType;
+    private SsoType ssoType;
+
+    private List<workBook> workBooks;
 }

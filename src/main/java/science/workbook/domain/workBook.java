@@ -7,14 +7,18 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Getter
-@Document
+@Document(collection = "workbook")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class workBook {
     @Id
-    private String id;
+    private Long id;
     private String userId;
-
-
+    private ProblemPdfPath pdfPath;
+    private List<ProblemType> problemTypes;
+    private List<Problem> problems;
+    private List<Problem> wrongProblems;
 }
