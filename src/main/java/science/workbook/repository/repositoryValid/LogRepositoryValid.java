@@ -8,7 +8,7 @@ import science.workbook.repository.repositoryMongo.LogRepository;
 @Repository
 @RequiredArgsConstructor
 public class LogRepositoryValid {
-    private LogRepository repository;
+    private final LogRepository repository;
 
     public void createLog(Log log) {
         repository.save(log);
