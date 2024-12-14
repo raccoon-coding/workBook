@@ -7,13 +7,15 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigInteger;
+
 @Getter
 @Document(collection = "subject")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class Subject {
+public class Subject extends DateTime {
     @Id
-    private Long id;
+    private BigInteger id;
     private String subjectName;
 
     public Subject(String subjectName) {

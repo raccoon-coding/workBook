@@ -14,7 +14,7 @@ import java.math.BigInteger;
 @Document(collection = "log")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class Log {
+public class Log extends DateTime {
     @Id
     private BigInteger id;
     private String userId;

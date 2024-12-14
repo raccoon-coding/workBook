@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import science.workbook.dto.toService.CreateNewUserDto;
 
 import java.util.List;
 
@@ -14,9 +15,9 @@ import java.util.List;
 @Document(collection = "user")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class User extends DateTime {
     @Id
-    private String userId;
+    private String id;
 
     @Email
     private String email;
@@ -25,5 +26,13 @@ public class User {
     private UserType userType;
     private SsoType ssoType;
 
-    private List<workBook> workBooks;
+    private List<WorkBook> workBooks;
+
+    public User(CreateNewUserDto dto) {
+        this.email = dto.email();
+        this.name = dto.name();
+        this.password = dto.password();
+        this.userType = dto.userType();
+        this.ssoType = dto.ssoType();
+    }
 }

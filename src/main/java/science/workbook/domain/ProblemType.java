@@ -8,13 +8,15 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import science.workbook.dto.toDomain.ProblemTypeSignatureDto;
 
+import java.math.BigInteger;
+
 @Getter
 @Document(collection = "problem_type")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class ProblemType {
+public class ProblemType extends DateTime {
     @Id
-    private Long id;
+    private BigInteger id;
     private Gradle gradle;
     private Subject subject;
     private String problemType;
