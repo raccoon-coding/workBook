@@ -1,0 +1,16 @@
+package science.workbook.repository.repositoryValid;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
+import science.workbook.domain.Log;
+import science.workbook.repository.repositoryMongo.LogRepository;
+
+@Repository
+@RequiredArgsConstructor
+public class LogRepositoryValid {
+    private final LogRepository repository;
+
+    public void createLog(Log log) {
+        repository.save(log);
+    }
+}

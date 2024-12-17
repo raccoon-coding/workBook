@@ -6,26 +6,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import science.workbook.dto.toService.CreateLogDto;
 
 import java.math.BigInteger;
+import java.util.List;
 
 @Getter
-@Document(collection = "log")
+@Document(collection = "workbook")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class Log extends DateTime {
+public class WorkBook extends DateTime {
     @Id
     private BigInteger id;
     private String userId;
-    private String logData;
-    private String requestUrl;
-    private String errorMessage;
-
-    public Log(CreateLogDto dto) {
-        this.userId = dto.userId();
-        this.logData = dto.body();
-        this.requestUrl = dto.url();
-        this.errorMessage = dto.errorMessage();
-    }
+    private ProblemPdfPath pdfPath;
+    private List<ProblemType> problemTypes;
+    private List<Problem> problems;
+    private List<Problem> wrongProblems;
 }
