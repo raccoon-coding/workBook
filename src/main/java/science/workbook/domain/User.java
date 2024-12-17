@@ -15,7 +15,7 @@ import java.util.List;
 @Document(collection = "user")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class User extends DateTime {
+public class User extends UserDataTime {
     @Id
     private String id;
 

@@ -1,17 +1,12 @@
 package science.workbook.domain;
 
-import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.domain.Persistable;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 
-@Getter
-@Document
-public abstract class DateTime implements Persistable<BigInteger> {
+public abstract class UserDataTime implements Persistable<String> {
     @CreatedDate
     private LocalDateTime createAt;
 
@@ -23,4 +18,3 @@ public abstract class DateTime implements Persistable<BigInteger> {
         return createAt == null;
     }
 }
-

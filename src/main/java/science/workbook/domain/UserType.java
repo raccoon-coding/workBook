@@ -1,5 +1,7 @@
 package science.workbook.domain;
 
+import science.workbook.exception.NotFoundUserType;
+
 import java.util.Arrays;
 
 public enum UserType {
@@ -9,6 +11,6 @@ public enum UserType {
         return Arrays.stream(UserType.values())
                 .filter(one -> one.name().equals(userType))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Invalid UserType: " + userType));
+                .orElseThrow(() -> new NotFoundUserType("Invalid UserType: " + userType));
     }
 }
