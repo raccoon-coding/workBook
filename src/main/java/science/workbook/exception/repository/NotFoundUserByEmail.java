@@ -1,4 +1,4 @@
-package science.workbook.exception;
+package science.workbook.exception.repository;
 
 public class NotFoundUserByEmail extends RuntimeException {
     public NotFoundUserByEmail(String message) {
