@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import science.workbook.domain.User;
 import science.workbook.domain.UserType;
-import science.workbook.dto.Requset.GetNewUserDto;
+import science.workbook.dto.request.GetNewUserDto;
 import science.workbook.dto.toService.CreateNewUserDto;
 import science.workbook.repository.repositoryValid.UserRepositoryValid;
 

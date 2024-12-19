@@ -1,11 +1,11 @@
 package science.workbook.domain;
 
-import science.workbook.exception.NotFoundUserType;
+import science.workbook.exception.repository.NotFoundUserType;
 
 import java.util.Arrays;
 
 public enum UserType {
-    Student, Teacher;
+    Student, Teacher, Academy;
 
     public static UserType findUserType(String userType) {
         return Arrays.stream(UserType.values())

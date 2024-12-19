@@ -1,4 +1,4 @@
-package science.workbook.dto.Requset;
+package science.workbook.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
