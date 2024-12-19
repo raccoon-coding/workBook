@@ -46,3 +46,4 @@ src/main/resources/
 data/
 backend/src/main/resources/
 docker/.env
+pdf/

@@ -5,10 +5,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import science.workbook.dto.Requset.GetNewUserDto;
+import science.workbook.dto.request.GetNewUserDto;
 import science.workbook.repository.repositoryValid.UserRepositoryValid;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
