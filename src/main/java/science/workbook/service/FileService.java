@@ -2,61 +2,85 @@ package science.workbook.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import science.workbook.exception.service.file.ExistDirectory;
+import science.workbook.exception.service.file.FailSavePDF;
 import science.workbook.exception.service.file.NotExistDirectory;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.function.Consumer;
+
+import static science.workbook.exception.message.FileMessage.PDF_저장_실패;
+import static science.workbook.service.PdfConstant.CREATE_DIRECTORY;
+import static science.workbook.service.PdfConstant.DELETE_DIRECTORY;
+import static science.workbook.service.PdfConstant.EXIST_DIRECTORY;
+import static science.workbook.service.PdfConstant.FAIL_CREATE_DIRECTORY;
+import static science.workbook.service.PdfConstant.FAIL_DELETE_DIRECTORY;
+import static science.workbook.service.PdfConstant.NOT_EXIST_DIRECTORY;
+import static science.workbook.service.PdfConstant.SLASH;
 
 @Slf4j
-@Component
+@Service
+@Transactional
 @RequiredArgsConstructor
 public class FileService {
     public void createUserDirectory(String userName) {
-        File file = new File(getAbsolutePath() + "/" + userName);
+        File file = new File(getAbsolutePath() + SLASH + userName);
         if(!file.exists()) {
-            tryDirectory(file, this::createDirectory);
+            createDirectory(file);
             return;
         }
-        throw new ExistDirectory("디렉토리가 이미 존재합니다.");
+        throw new ExistDirectory(EXIST_DIRECTORY);
     }
 
     public void deleteUserDirectory(String userName) {
-        File file = new File(getAbsolutePath() + "/" + userName);
+        File file = new File(getAbsolutePath() + SLASH + userName);
         if(file.exists()) {
-            tryDirectory(file, this::deleteDirectory);
+            deleteDirectory(file);
             return;
         }
-        throw new NotExistDirectory("디렉토리가 존재하지 않습니다.");
+        throw new NotExistDirectory(NOT_EXIST_DIRECTORY);
     }
 
-    private void tryDirectory(File file, Consumer<File> fileLogic) {
-        fileLogic.accept(file);
+    public String saveFile(MultipartFile file, String userName) {
+        try {
+            String filePath = getAbsolutePath() + File.separator + userName + File.separator + file.getOriginalFilename();
+            file.transferTo(new File(filePath));
+            log.info("PDF 저장 완료");
+            return filePath;
+        } catch (IOException e) {
+            throw new FailSavePDF(PDF_저장_실패);
+        }
+    }
+
+    public void deleteFile() {
+
     }
 
     private void createDirectory(File file) {
         boolean isMakeDirectory = file.mkdirs();
         if(isMakeDirectory) {
-            log.info("디렉토리 생성 완료");
+            log.info(CREATE_DIRECTORY);
             return;
         }
-        log.info("디렉토리 생성 실패");
+        log.info(FAIL_CREATE_DIRECTORY);
     }
 
     private void deleteDirectory(File file) {
         boolean isDeleteDirectory = file.delete();
         if(isDeleteDirectory) {
-            log.info("디렉토리 삭제 완료");
+            log.info(DELETE_DIRECTORY);
             return;
         }
-        log.info("디렉토리 삭제 실패");
+        log.info(FAIL_DELETE_DIRECTORY);
     }
 
     private String getAbsolutePath() {
-        Path path = Paths.get("pdf");
+        Path path = Paths.get(PdfConstant.PDF);
         return path.toAbsolutePath().toString();
     }
 }
