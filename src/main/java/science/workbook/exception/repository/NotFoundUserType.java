@@ -1,7 +1,10 @@
 package science.workbook.exception.repository;
 
-public class NotFoundUserType extends RuntimeException {
-    public NotFoundUserType(String message) {
+import science.workbook.dto.api.ApiMessage;
+import science.workbook.exception.CustomException;
+
+public class NotFoundUserType extends CustomException {
+    public NotFoundUserType(ApiMessage message) {
         super(message);
     }
 }

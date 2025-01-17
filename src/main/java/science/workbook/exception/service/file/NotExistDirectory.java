@@ -1,7 +1,10 @@
 package science.workbook.exception.service.file;
 
-public class NotExistDirectory extends RuntimeException {
-    public NotExistDirectory(String message) {
+import science.workbook.dto.api.ApiMessage;
+import science.workbook.exception.CustomException;
+
+public class NotExistDirectory extends CustomException {
+    public NotExistDirectory(ApiMessage message) {
         super(message);
     }
 }
