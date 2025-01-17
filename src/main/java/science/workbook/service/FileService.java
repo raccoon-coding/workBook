@@ -14,13 +14,13 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static science.workbook.exception.constant.ApiErrorMessage.디렉토리_없음_에러;
+import static science.workbook.exception.constant.ApiErrorMessage.디렉토리_존재_에러;
 import static science.workbook.exception.message.FileMessage.PDF_저장_실패;
 import static science.workbook.service.PdfConstant.CREATE_DIRECTORY;
 import static science.workbook.service.PdfConstant.DELETE_DIRECTORY;
-import static science.workbook.service.PdfConstant.EXIST_DIRECTORY;
 import static science.workbook.service.PdfConstant.FAIL_CREATE_DIRECTORY;
 import static science.workbook.service.PdfConstant.FAIL_DELETE_DIRECTORY;
-import static science.workbook.service.PdfConstant.NOT_EXIST_DIRECTORY;
 import static science.workbook.service.PdfConstant.SLASH;
 
 @Slf4j
@@ -34,7 +34,7 @@ public class FileService {
             createDirectory(file);
             return;
         }
-        throw new ExistDirectory(EXIST_DIRECTORY);
+        throw new ExistDirectory(디렉토리_존재_에러);
     }
 
     public void deleteUserDirectory(String userName) {
@@ -43,7 +43,7 @@ public class FileService {
             deleteDirectory(file);
             return;
         }
-        throw new NotExistDirectory(NOT_EXIST_DIRECTORY);
+        throw new NotExistDirectory(디렉토리_없음_에러);
     }
 
     public String saveFile(MultipartFile file, String userName) {
