@@ -22,10 +22,6 @@ public class UserRepositoryValid {
         repository.save(user);
     }
 
-    public void deleteByUserEmail(String email) {
-        repository.deleteByEmail(email);
-    }
-
     public void deleteUser(User user) {
         repository.delete(user);
     }

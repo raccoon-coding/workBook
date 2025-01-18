@@ -35,4 +35,8 @@ public class User extends UserDataTime {
         this.userType = dto.userType();
         this.ssoType = dto.ssoType();
     }
+
+    public void changePassword(String newPassword) {
+        this.password = newPassword;
+    }
 }
