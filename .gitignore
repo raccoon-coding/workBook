@@ -41,9 +41,8 @@ out/
 
 ### git ignore ###
 application.yml
-serviceAccountKey.json
 src/main/resources/
 data/
 backend/src/main/resources/
 docker/.env
-pdf/
+pdf/..

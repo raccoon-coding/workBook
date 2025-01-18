@@ -10,6 +10,8 @@ import science.workbook.repository.repositoryMongo.UserRepository;
 
 import java.util.Optional;
 
+import static science.workbook.exception.constant.ApiErrorMessage.유저찾기실패;
+
 @Repository
 @RequiredArgsConstructor
 public class UserRepositoryValid {
@@ -18,10 +20,6 @@ public class UserRepositoryValid {
     public void createNewUser(CreateNewUserDto dto) {
         User user = new User(dto);
         repository.save(user);
-    }
-
-    public void deleteByUserEmail(String email) {
-        repository.deleteByEmail(email);
     }
 
     public void deleteUser(User user) {
@@ -37,7 +35,7 @@ public class UserRepositoryValid {
         if(optional.isPresent()) {
             return optional.get();
         }
-        throw new NotFoundUserByEmail("해당 이메일로 가입한 유저가 존재하지 않습니다.");
+        throw new NotFoundUserByEmail(유저찾기실패);
     }
 
     public User findByUserId(String Id) {
@@ -45,6 +43,6 @@ public class UserRepositoryValid {
         if(optional.isPresent()) {
             return optional.get();
         }
-        throw new NotFoundUserById("해당 토큰은 저희 서버에서 발급한 토큰이 아닙니다.");
+        throw new NotFoundUserById(유저찾기실패);
     }
 }

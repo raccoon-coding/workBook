@@ -4,6 +4,8 @@ import science.workbook.exception.repository.NotFoundUserType;
 
 import java.util.Arrays;
 
+import static science.workbook.exception.constant.ApiErrorMessage.유저타입에러;
+
 public enum UserType {
     Student, Teacher, Academy;
 
@@ -11,6 +13,6 @@ public enum UserType {
         return Arrays.stream(UserType.values())
                 .filter(one -> one.name().equals(userType))
                 .findFirst()
-                .orElseThrow(() -> new NotFoundUserType("Invalid UserType: " + userType));
+                .orElseThrow(() -> new NotFoundUserType(유저타입에러));
     }
 }

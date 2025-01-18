@@ -1,7 +1,10 @@
 package science.workbook.exception.repository;
 
-public class NotFoundUserById extends RuntimeException {
-    public NotFoundUserById(String message) {
+import science.workbook.dto.api.ApiMessage;
+import science.workbook.exception.CustomException;
+
+public class NotFoundUserById extends CustomException {
+    public NotFoundUserById(ApiMessage message) {
         super(message);
     }
 }
