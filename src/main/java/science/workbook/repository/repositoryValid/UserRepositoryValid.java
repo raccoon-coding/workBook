@@ -3,7 +3,7 @@ package science.workbook.repository.repositoryValid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import science.workbook.domain.User;
-import science.workbook.dto.toService.CreateNewUserDto;
+import science.workbook.dto.toService.CreateNewUserDtoToService;
 import science.workbook.exception.repository.NotFoundUserByEmail;
 import science.workbook.exception.repository.NotFoundUserById;
 import science.workbook.repository.repositoryMongo.UserRepository;
@@ -17,7 +17,7 @@ import static science.workbook.exception.constant.ApiErrorMessage.유저찾기�
 public class UserRepositoryValid {
     private final UserRepository repository;
 
-    public void createNewUser(CreateNewUserDto dto) {
+    public void createNewUser(CreateNewUserDtoToService dto) {
         User user = new User(dto);
         repository.save(user);
     }

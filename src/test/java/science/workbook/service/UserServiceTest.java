@@ -4,13 +4,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import science.workbook.domain.SsoType;
 import science.workbook.domain.User;
 import science.workbook.domain.UserType;
 import science.workbook.dto.request.GetNewUserDto;
-import science.workbook.dto.toService.CreateNewUserDto;
+import science.workbook.dto.toService.CreateNewUserDtoToService;
 import science.workbook.repository.repositoryValid.UserRepositoryValid;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -47,6 +46,6 @@ class UserServiceTest {
     }
 
     User stubbing() {
-        return new User(new CreateNewUserDto(userEmail, "admin", "1234", UserType.Student, SsoType.Default));
+        return new User(new CreateNewUserDtoToService(userEmail, "admin", "1234", UserType.Student, SsoType.Default));
     }
 }

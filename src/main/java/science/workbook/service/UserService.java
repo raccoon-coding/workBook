@@ -8,10 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 import science.workbook.domain.User;
 import science.workbook.domain.UserType;
 import science.workbook.dto.request.GetNewUserDto;
-import science.workbook.dto.response.JoinCompleteDto;
-import science.workbook.dto.toController.JoinUserInfo;
-import science.workbook.dto.toService.ChangeUserPasswordDto;
-import science.workbook.dto.toService.CreateNewUserDto;
+import science.workbook.dto.toController.JoinUserInfoDtoToController;
+import science.workbook.dto.toService.ChangeUserPasswordDtoToService;
+import science.workbook.dto.toService.CreateNewUserDtoToService;
 import science.workbook.exception.repository.NotFoundUserByEmail;
 import science.workbook.exception.service.user.NotMatchPassword;
 import science.workbook.repository.repositoryValid.UserRepositoryValid;
@@ -27,16 +26,16 @@ public class UserService {
     private final BCryptPasswordEncoder encoder;
 
     @Transactional
-    public JoinUserInfo createNewUser(GetNewUserDto controllerDto) {
+    public JoinUserInfoDtoToController createNewUser(GetNewUserDto controllerDto) {
         UserType userType = UserType.findUserType(controllerDto.getUserType());
 
-        CreateNewUserDto dto = CreateNewUserDto.createDefaultSsoType(controllerDto.getUserEmail(),
+        CreateNewUserDtoToService dto = CreateNewUserDtoToService.createDefaultSsoType(controllerDto.getUserEmail(),
                 controllerDto.getUserName(), controllerDto.getUserPassword(), userType);
 
         // valid userData / unique key를 이름? 이메일??
 
         repository.createNewUser(dto);
-        return new JoinUserInfo(dto);
+        return new JoinUserInfoDtoToController(dto);
     }
 
     @Transactional
@@ -45,7 +44,7 @@ public class UserService {
     }
 
     @Transactional
-    public void changeUserPassword(ChangeUserPasswordDto dto) {
+    public void changeUserPassword(ChangeUserPasswordDtoToService dto) {
         User user = dto.user();
         if(!encoder.matches(user.getPassword(), dto.oldPassword())) {
             throw new NotMatchPassword(비밀번호_변경_에러);

@@ -9,7 +9,7 @@ import science.workbook.domain.User;
 import science.workbook.dto.api.Api;
 import science.workbook.dto.api.ApiMessage;
 import science.workbook.dto.response.UserInfoDto;
-import science.workbook.dto.toService.ChangeUserPasswordDto;
+import science.workbook.dto.toService.ChangeUserPasswordDtoToService;
 import science.workbook.service.UserService;
 import science.workbook.util.UserUtil;
 
@@ -41,7 +41,7 @@ public class UserController {
     @PatchMapping("/password")
     public Api<ApiMessage> patchPassword(String oldPassword, String newPassword) {
         User user = UserUtil.getUser();
-        ChangeUserPasswordDto dto = new ChangeUserPasswordDto(user, oldPassword, newPassword);
+        ChangeUserPasswordDtoToService dto = new ChangeUserPasswordDtoToService(user, oldPassword, newPassword);
 
         userService.changeUserPassword(dto);
 

@@ -6,11 +6,10 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import science.workbook.domain.SsoType;
 import science.workbook.domain.User;
 import science.workbook.domain.UserType;
-import science.workbook.dto.toService.CreateNewUserDto;
+import science.workbook.dto.toService.CreateNewUserDtoToService;
 import science.workbook.repository.repositoryMongo.UserRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataMongoTest
 class UserRepositoryValidTest {
@@ -25,7 +24,7 @@ class UserRepositoryValidTest {
 
     @Test
     void 새로운_유저_생성() {
-        CreateNewUserDto dto = 유저_정보();
+        CreateNewUserDtoToService dto = 유저_정보();
         repository.createNewUser(dto);
 
         유저_정보_삭제();
@@ -33,7 +32,7 @@ class UserRepositoryValidTest {
 
     @Test
     void 이메일로_유저_찾기() {
-        CreateNewUserDto dto = 유저_정보();
+        CreateNewUserDtoToService dto = 유저_정보();
         repository.createNewUser(dto);
 
         User user = repository.findByUserEmail(userEmail);
@@ -42,8 +41,8 @@ class UserRepositoryValidTest {
         유저_정보_삭제();
     }
 
-    CreateNewUserDto 유저_정보() {
-        return new CreateNewUserDto(userEmail, "admin", "1234", UserType.Student, SsoType.Default);
+    CreateNewUserDtoToService 유저_정보() {
+        return new CreateNewUserDtoToService(userEmail, "admin", "1234", UserType.Student, SsoType.Default);
     }
 
     void 유저_정보_삭제() {

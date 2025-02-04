@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import science.workbook.dto.api.Api;
 import science.workbook.dto.request.GetNewUserDto;
 import science.workbook.dto.response.JoinCompleteDto;
-import science.workbook.dto.toController.JoinUserInfo;
+import science.workbook.dto.toController.JoinUserInfoDtoToController;
 import science.workbook.service.UserService;
 
 import static science.workbook.dto.api.ApiServerMessage.회원가입_성공;
@@ -22,7 +22,7 @@ public class MainController {
         if(userService.validUserEmailAndName(dto.getUserEmail(), dto.getUserName())){
             return new Api<>(가입실패);
         }
-        JoinUserInfo userInfo = userService.createNewUser(dto);
+        JoinUserInfoDtoToController userInfo = userService.createNewUser(dto);
         JoinCompleteDto completeDto = new JoinCompleteDto(userInfo);
 
         return new Api<>(completeDto, 회원가입_성공);

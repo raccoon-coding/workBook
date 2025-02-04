@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import science.workbook.dto.toService.CreateNewUserDto;
+import science.workbook.dto.toService.CreateNewUserDtoToService;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class User extends UserDataTime {
 
     private List<WorkBook> workBooks;
 
-    public User(CreateNewUserDto dto) {
+    public User(CreateNewUserDtoToService dto) {
         this.email = dto.email();
         this.name = dto.name();
         this.password = dto.password();

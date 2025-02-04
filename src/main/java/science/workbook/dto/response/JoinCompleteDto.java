@@ -2,7 +2,7 @@ package science.workbook.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import science.workbook.dto.toController.JoinUserInfo;
+import science.workbook.dto.toController.JoinUserInfoDtoToController;
 
 @Getter
 @AllArgsConstructor
@@ -12,7 +12,7 @@ public class JoinCompleteDto {
     private final String userType;
     private final String ssoType;
 
-    public JoinCompleteDto(JoinUserInfo dto) {
+    public JoinCompleteDto(JoinUserInfoDtoToController dto) {
         this.userEmail = dto.getUserEmail();
         this.username = dto.getUsername();
         this.userType = dto.getUserType();

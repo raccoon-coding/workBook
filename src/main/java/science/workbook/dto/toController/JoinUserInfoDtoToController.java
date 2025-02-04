@@ -1,16 +1,16 @@
 package science.workbook.dto.toController;
 
 import lombok.Getter;
-import science.workbook.dto.toService.CreateNewUserDto;
+import science.workbook.dto.toService.CreateNewUserDtoToService;
 
 @Getter
-public class JoinUserInfo {
+public class JoinUserInfoDtoToController {
     private final String userEmail;
     private final String username;
     private final String userType;
     private final String ssoType;
 
-    public JoinUserInfo(CreateNewUserDto dto) {
+    public JoinUserInfoDtoToController(CreateNewUserDtoToService dto) {
         this.userEmail = dto.email();
         this.username = dto.name();
         this.userType = dto.userType().toString();
