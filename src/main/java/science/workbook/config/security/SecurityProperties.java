@@ -9,7 +9,8 @@ public class SecurityProperties {
     private List<String> skipPatterns;
 
     public SecurityProperties(List<String> skipPatterns) {
-        this.skipPatterns = List.of("/join", "/login", "/refresh", "/v3/api-docs/**", "/swagger-ui/**");
+        this.skipPatterns = List.of("/join", "/login", "/refresh", "/validEmail", "/findUserEmail", "/findUserPassword",
+                "/v3/api-docs/**", "/swagger-ui/**");
     }
 
     public List<String> getSkipPatterns() {

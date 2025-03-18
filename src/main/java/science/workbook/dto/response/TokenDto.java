@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class TokenDto {
-    private final String accessToken;
-    private final String refreshToken;
+    public final String accessToken;
+    public final String refreshToken;
 }

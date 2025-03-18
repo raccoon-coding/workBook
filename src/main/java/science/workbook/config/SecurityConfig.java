@@ -29,7 +29,7 @@ public class SecurityConfig {
 
     private final String student = Student.name();
     private final String teacher = Teacher.name();
-    private final String academy = Academy.name();;
+    private final String academy = Academy.name();
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -39,7 +39,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/join", "/login", "/refresh", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/join", "/login", "/refresh", "/v3/api-docs/**", "/validEmail").permitAll()
                         .requestMatchers("/user/**").hasAnyAuthority(student, teacher, academy)
                         .requestMatchers("/student/**").hasAnyAuthority(student)
                         .requestMatchers("/teacher/**").hasAnyAuthority(teacher, academy)
