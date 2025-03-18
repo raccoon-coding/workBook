@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import science.workbook.dto.toDomain.ProblemTypeSignatureDto;
+import science.workbook.dto.toDomain.ProblemTypeDtoToDomain;
 
 import java.math.BigInteger;
 
@@ -21,7 +21,7 @@ public class ProblemType extends DateTime {
     private Subject subject;
     private String problemType;
 
-    public ProblemType(ProblemTypeSignatureDto dto) {
+    public ProblemType(ProblemTypeDtoToDomain dto) {
         this.gradle = dto.gradle();
         this.subject = dto.subject();
         this.problemType = dto.problemType();

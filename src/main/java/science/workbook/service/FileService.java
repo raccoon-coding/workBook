@@ -25,9 +25,10 @@ import static science.workbook.service.PdfConstant.SLASH;
 
 @Slf4j
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class FileService {
+    @Transactional
     public void createUserDirectory(String userName) {
         File file = new File(getAbsolutePath() + SLASH + userName);
         if(!file.exists()) {
@@ -37,6 +38,7 @@ public class FileService {
         throw new ExistDirectory(디렉토리_존재_에러);
     }
 
+    @Transactional
     public void deleteUserDirectory(String userName) {
         File file = new File(getAbsolutePath() + SLASH + userName);
         if(file.exists()) {
@@ -46,6 +48,7 @@ public class FileService {
         throw new NotExistDirectory(디렉토리_없음_에러);
     }
 
+    @Transactional
     public String saveFile(MultipartFile file, String userName) {
         try {
             String filePath = getAbsolutePath() + File.separator + userName + File.separator + file.getOriginalFilename();
@@ -57,6 +60,7 @@ public class FileService {
         }
     }
 
+    @Transactional
     public void deleteFile() {
 
     }

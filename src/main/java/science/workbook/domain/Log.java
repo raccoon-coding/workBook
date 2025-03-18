@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import science.workbook.dto.toService.CreateLogDto;
+import science.workbook.dto.toService.CreateLogDtoToService;
 
 import java.math.BigInteger;
 
@@ -22,7 +22,7 @@ public class Log extends DateTime {
     private String requestUrl;
     private String errorMessage;
 
-    public Log(CreateLogDto dto) {
+    public Log(CreateLogDtoToService dto) {
         this.userId = dto.userId();
         this.logData = dto.body();
         this.requestUrl = dto.url();

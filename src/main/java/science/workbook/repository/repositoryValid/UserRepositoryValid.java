@@ -3,11 +3,11 @@ package science.workbook.repository.repositoryValid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import science.workbook.domain.User;
-import science.workbook.dto.toService.CreateNewUserDto;
 import science.workbook.exception.repository.NotFoundUserByEmail;
 import science.workbook.exception.repository.NotFoundUserById;
 import science.workbook.repository.repositoryMongo.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 import static science.workbook.exception.constant.ApiErrorMessage.유저찾기실패;
@@ -17,13 +17,20 @@ import static science.workbook.exception.constant.ApiErrorMessage.유저찾기�
 public class UserRepositoryValid {
     private final UserRepository repository;
 
-    public void createNewUser(CreateNewUserDto dto) {
-        User user = new User(dto);
-        repository.save(user);
+    public void createNewUser(User newUser) {
+        repository.save(newUser);
     }
 
     public void deleteUser(User user) {
         repository.delete(user);
+    }
+
+    public void deleteUserByEmail(String email) {
+        repository.deleteByEmail(email);
+    }
+
+    public void deleteEmails(List<String> deleteEmails) {
+        repository.deleteByEmailIn(deleteEmails);
     }
 
     public void changeUserPassword(User user) {

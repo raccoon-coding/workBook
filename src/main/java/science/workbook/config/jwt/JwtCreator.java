@@ -6,7 +6,7 @@ import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.ObjectUtils;
 import science.workbook.dto.response.TokenDto;
-import science.workbook.dto.toService.CreateTokenDto;
+import science.workbook.dto.toService.CreateTokenDtoToService;
 import science.workbook.exception.token.NotHaveToken;
 import science.workbook.exception.constant.ApiErrorMessage;
 
@@ -25,7 +25,7 @@ import static science.workbook.config.jwt.JwtUtil.USER_UUID;
 public interface JwtCreator {
     SecretKey getKey();
 
-    default TokenDto createToken(CreateTokenDto tokenDto){
+    default TokenDto createToken(CreateTokenDtoToService tokenDto){
         long now = (new Date()).getTime();
         Date accessTokenExpiresIn = new Date(now + HALF_HOUR);
         Date refreshTokenExpiresIn = new Date(now + ONE_HOUR);
@@ -56,7 +56,7 @@ public interface JwtCreator {
         throw new NotHaveToken(ApiErrorMessage.토큰_요청.getMessage());
     }
 
-    private String createAccessToken(CreateTokenDto tokenDto, Date tokenExpiresIn) {
+    private String createAccessToken(CreateTokenDtoToService tokenDto, Date tokenExpiresIn) {
         String token = Jwts.builder()
                 .subject(SUBJECT_ACCESS)
                 .claim(USER_UUID, tokenDto.userId())
@@ -67,7 +67,7 @@ public interface JwtCreator {
         return TOKEN_PREFIX + token;
     }
 
-    private String createRefreshToken(CreateTokenDto tokenDto, Date tokenExpiresIn) {
+    private String createRefreshToken(CreateTokenDtoToService tokenDto, Date tokenExpiresIn) {
         String token = Jwts.builder()
                 .subject(SUBJECT_REFRESH)
                 .claim(USER_UUID, tokenDto.userId())

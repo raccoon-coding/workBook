@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.util.ContentCachingRequestWrapper;
-import science.workbook.dto.toService.CreateLogDto;
+import science.workbook.dto.toService.CreateLogDtoToService;
 import science.workbook.service.LogService;
 
 import java.util.Objects;
@@ -47,12 +47,12 @@ public class LogAspect {
     }
 
     private void createSuccessLog(ProceedingJoinPoint thisJoinPoint, String requestBody) {
-        CreateLogDto dto = CreateLogDto.ofSuccessLog(thisJoinPoint.getSignature().getName(), requestBody);
+        CreateLogDtoToService dto = CreateLogDtoToService.ofSuccessLog(thisJoinPoint.getSignature().getName(), requestBody);
         logService.createLog(dto);
     }
 
     private void createExceptionLog(ProceedingJoinPoint thisJoinPoint, String requestBody, String exceptionMessage) {
-        CreateLogDto dto = CreateLogDto.ofExceptionLog(thisJoinPoint.getSignature().getName(), requestBody, exceptionMessage);
+        CreateLogDtoToService dto = CreateLogDtoToService.ofExceptionLog(thisJoinPoint.getSignature().getName(), requestBody, exceptionMessage);
         logService.createLog(dto);
     }
 

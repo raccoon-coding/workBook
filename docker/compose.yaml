@@ -1,5 +1,5 @@
 services:
-  workbookServer:
+  workbookserver:
     container_name: workbook-server
     build:
       context: ../
@@ -7,7 +7,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://${MONGODB_USER}:${MONGODB_PASSWORD}@workbook_db:27017/workbook_db?authSource=admin
+      SPRING_DATA_MONGODB_URI: mongodb://${MONGODB_USER}:${MONGODB_PASSWORD}@mongodb:27017/mongodb?authSource=admin
     depends_on:
       - mongodb
 
