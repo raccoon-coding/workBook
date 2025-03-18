@@ -13,14 +13,14 @@ import java.time.LocalDateTime;
 @Document
 public abstract class DateTime implements Persistable<BigInteger> {
     @CreatedDate
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
-    private LocalDateTime updateAt;
+    private LocalDateTime updatedAt;
 
     @Override
     public boolean isNew() {
-        return createAt == null;
+        return createdAt == null;
     }
 }
 
