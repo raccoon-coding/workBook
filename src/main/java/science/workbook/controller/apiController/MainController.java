@@ -1,10 +1,8 @@
 package science.workbook.controller.apiController;
 
-import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +22,6 @@ import science.workbook.dto.toService.JoinUserDtoToService;
 import science.workbook.service.MailService;
 import science.workbook.service.UserService;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static science.workbook.dto.api.ApiServerMessage.로그인_성공;
@@ -44,7 +41,7 @@ public class MainController {
     private final MailService mailService;
 
     @PostMapping("/join")
-    public Api<JoinCompleteDto> joinUserDefault(@Validated @RequestBody GetNewUserDto dto) throws MessagingException {
+    public Api<JoinCompleteDto> joinUserDefault(@Validated @RequestBody GetNewUserDto dto) {
         if(userService.validUserEmailAndName(dto.getUserEmail(), dto.getUserName())){
             return new Api<>(가입실패);
         }
@@ -81,7 +78,7 @@ public class MainController {
     }
 
     @PostMapping("/findUserPassword")
-    public Api<ApiMessage> findUserPassword(@Validated @RequestBody FindUserPasswordDto dto) throws MessagingException {
+    public Api<ApiMessage> findUserPassword(@Validated @RequestBody FindUserPasswordDto dto) {
         String newPassword = userService.findPasswordByUserEmail(dto.getUserEmail(), dto.getUserName());
 
         String content = mailService.setContextFindPassword(dto.getUserName(), newPassword);
