@@ -21,16 +21,14 @@ import static science.workbook.service.PdfConstant.CREATE_DIRECTORY;
 import static science.workbook.service.PdfConstant.DELETE_DIRECTORY;
 import static science.workbook.service.PdfConstant.FAIL_CREATE_DIRECTORY;
 import static science.workbook.service.PdfConstant.FAIL_DELETE_DIRECTORY;
-import static science.workbook.service.PdfConstant.SLASH;
 
-@Slf4j
-@Service
+@Slf4j @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class FileService {
     @Transactional
     public void createUserDirectory(String userName) {
-        File file = new File(getAbsolutePath() + SLASH + userName);
+        File file = new File(getAbsolutePath() + File.separator + userName);
         if(!file.exists()) {
             createDirectory(file);
             return;
@@ -40,7 +38,7 @@ public class FileService {
 
     @Transactional
     public void deleteUserDirectory(String userName) {
-        File file = new File(getAbsolutePath() + SLASH + userName);
+        File file = new File(getAbsolutePath() + File.separator + userName);
         if(file.exists()) {
             deleteDirectory(file);
             return;
@@ -61,8 +59,13 @@ public class FileService {
     }
 
     @Transactional
-    public void deleteFile() {
-
+    public void deleteFile(String userName, String fileName) {
+        File file = new File(getAbsolutePath() + File.separator + userName + File.separator + fileName);
+        if(file.exists()) {
+            deleteDirectory(file);
+            return;
+        }
+        throw new NotExistDirectory(디렉토리_없음_에러);
     }
 
     private void createDirectory(File file) {
