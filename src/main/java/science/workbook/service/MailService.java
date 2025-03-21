@@ -12,11 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import science.workbook.domain.EmailType;
+import science.workbook.exception.service.mail.MailSendException;
 import science.workbook.repository.repositoryValid.EmailTypeRepositoryValid;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+
+import static science.workbook.exception.constant.ApiErrorMessage.이메일_전송_에러;
 
 @Service @Slf4j
 @RequiredArgsConstructor
@@ -27,19 +30,18 @@ public class MailService {
     private final EmailTypeRepositoryValid emailRepository;
 
     @Async
-    public void sendEmailNotice(String toEmail, String title, String content) throws MessagingException {
+    public void sendEmailNotice(String toEmail, String title, String content) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
-        mimeMessageHelper.setTo(toEmail);
-        mimeMessageHelper.setSubject(title);
-        mimeMessageHelper.setText(content, true);
         try {
-
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
+            mimeMessageHelper.setTo(toEmail);
+            mimeMessageHelper.setSubject(title);
+            mimeMessageHelper.setText(content, true);
             javaMailSender.send(mimeMessage);
-            log.info("Succeeded to send Email");
-        } catch (Exception e) {
-            log.info("Failed to send Email");
-            throw new RuntimeException(e);
+            log.info("이메일 전송 성공");
+        } catch (MessagingException e) {
+            log.info("이메일 전송 실패");
+            throw new MailSendException(이메일_전송_에러);
         }
     }
 
