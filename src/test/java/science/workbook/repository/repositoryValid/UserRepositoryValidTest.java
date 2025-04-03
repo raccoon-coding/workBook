@@ -14,6 +14,7 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 
 @DataMongoTest
 class UserRepositoryValidTest {
@@ -29,7 +30,7 @@ class UserRepositoryValidTest {
     @Test
     void 새로운_유저_생성() {
         CreateNewUserDtoToService dto = 유저_정보();
-        User newUser = new User(dto, null);
+        User newUser = new User(dto, any(), any());
         repository.createNewUser(newUser);
 
         유저_정보_삭제();
@@ -38,7 +39,7 @@ class UserRepositoryValidTest {
     @Test
     void 이메일로_유저_찾기() {
         CreateNewUserDtoToService dto = 유저_정보();
-        User newUser = new User(dto, null);
+        User newUser = new User(dto, any(), any());
         repository.createNewUser(newUser);
 
         User user = repository.findByUserEmail(userEmail);
@@ -71,8 +72,8 @@ class UserRepositoryValidTest {
 
     @Test
     void 여러_이메일_삭제() {
-        User user1 = new User(new CreateNewUserDtoToService("user1@gmail.com", "user1", "pass1", UserType.Student, SsoType.Default), null);
-        User user2 = new User(new CreateNewUserDtoToService("user2@gmail.com", "user2", "pass2", UserType.Student, SsoType.Default), null);
+        User user1 = new User(new CreateNewUserDtoToService("user1@gmail.com", "user1", "pass1", UserType.Student, SsoType.Default), any(), any());
+        User user2 = new User(new CreateNewUserDtoToService("user2@gmail.com", "user2", "pass2", UserType.Student, SsoType.Default), any(), any());
         repository.createNewUser(user1);
         repository.createNewUser(user2);
 
@@ -99,7 +100,7 @@ class UserRepositoryValidTest {
     }
 
     User 유저_생성() {
-        return new User(유저_정보(), null);
+        return new User(유저_정보(), any(), any());
     }
 
     CreateNewUserDtoToService 유저_정보() {
