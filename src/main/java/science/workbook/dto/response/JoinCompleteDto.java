@@ -10,12 +10,10 @@ public class JoinCompleteDto {
     private final String userEmail;
     private final String username;
     private final String userType;
-    private final String ssoType;
 
     public JoinCompleteDto(User user) {
         this.userEmail = user.getEmail();
         this.username = user.getName();
         this.userType = user.getUserType().toString();
-        this.ssoType = user.getSsoType().toString();
     }
 }
