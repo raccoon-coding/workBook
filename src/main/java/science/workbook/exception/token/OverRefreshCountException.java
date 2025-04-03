@@ -1,7 +1,10 @@
 package science.workbook.exception.token;
 
-public class OverRefreshCountException extends RuntimeException {
-    public OverRefreshCountException(String message) {
+import science.workbook.dto.api.ApiMessage;
+import science.workbook.exception.CustomException;
+
+public class OverRefreshCountException extends CustomException {
+    public OverRefreshCountException(ApiMessage message) {
         super(message);
     }
 }
