@@ -1,4 +1,6 @@
 package science.workbook.dto.toService;
 
-public record CreateTokenDtoToService(String userId, Integer refreshCount) {
+import java.math.BigInteger;
+
+public record CreateTokenDtoToService(String userId, BigInteger refreshId) {
 }

@@ -27,17 +27,20 @@ public class User extends UserTime {
     private UserType userType;
     private SsoType ssoType;
     @DBRef
-    private EmailType emailType;
+    private Refresh refresh;
 
+    @DBRef(lazy = true)
+    private EmailType emailType;
     @DBRef(lazy = true)
     private List<WorkBook> workBooks;
 
-    public User(CreateNewUserDtoToService dto, EmailType emailType) {
+    public User(CreateNewUserDtoToService dto, EmailType emailType, Refresh refresh) {
         this.email = dto.email();
         this.name = dto.name();
         this.password = dto.password();
         this.userType = dto.userType();
         this.ssoType = dto.ssoType();
+        this.refresh = refresh;
         createCode(emailType);
     }
 
