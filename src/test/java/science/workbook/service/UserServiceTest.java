@@ -8,11 +8,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import science.workbook.config.jwt.JwtProvider;
 import science.workbook.domain.EmailType;
+import science.workbook.domain.Refresh;
 import science.workbook.domain.SsoType;
 import science.workbook.domain.User;
 import science.workbook.domain.UserType;
 import science.workbook.dto.request.GetNewUserDto;
 import science.workbook.dto.response.TokenDto;
+import science.workbook.dto.toController.LoginDto;
 import science.workbook.dto.toService.ChangeUserPasswordDtoToService;
 import science.workbook.dto.toService.CreateNewUserDtoToService;
 import science.workbook.dto.toService.JoinUserDtoToService;
@@ -47,11 +49,13 @@ class UserServiceTest {
     void 새로운_유저_생성() {
         GetNewUserDto getNewUserDto = 유저_데이터_생성();
         User newUser = stubbing();
+        EmailType emailType = new EmailType(userEmail);
+        Refresh refresh = new Refresh(userName, userEmail);
 
         when(encoder.encode(anyString())).thenReturn("encodedPassword");
         when(repository.findByUserEmail(userEmail)).thenReturn(newUser);
 
-        userService.createNewUser(getNewUserDto, null);
+        userService.createNewUser(getNewUserDto, emailType, refresh);
 
         User user = userService.findByUserEmail(userEmail);
         assertThat(user.getEmail()).isEqualTo(userEmail);
@@ -105,7 +109,7 @@ class UserServiceTest {
 
         when(encoder.encode(anyString())).thenReturn("encodedPassword");
         when(repository.findByUserEmail(userEmail)).thenReturn(user);
-        userService.createNewUser(getNewUserDto, emailType);
+        userService.createNewUser(getNewUserDto, emailType ,any());
 
         when(repository.findByUserEmail(userEmail)).thenReturn(user);
         when(encoder.encode(anyString())).thenReturn("encodedNewPassword");
@@ -129,7 +133,8 @@ class UserServiceTest {
                         .refreshToken("refreshToken")
                         .build());
 
-        TokenDto token = userService.loginUser(dto);
+        LoginDto loginDto = userService.loginUser(dto);
+        TokenDto token = loginDto.tokenDto();
 
         assertThat(token).isNotNull();
         assertThat(token.getAccessToken()).isEqualTo("accessToken");
@@ -159,8 +164,9 @@ class UserServiceTest {
     User stubbing() {
         CreateNewUserDtoToService dto = new CreateNewUserDtoToService(userEmail, userName, password, UserType.Student, SsoType.Default);
         EmailType emailType = new EmailType(userEmail);
+        Refresh refresh = new Refresh(userName, userEmail);
         String code = emailType.getCode();
         emailType.checkEmail(code);
-        return new User(dto, emailType);
+        return new User(dto, emailType, refresh);
     }
 }

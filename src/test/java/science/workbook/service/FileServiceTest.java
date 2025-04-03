@@ -40,17 +40,14 @@ class FileServiceTest {
 
     @Test
     void PDF_생성_확인() throws IOException {
-        // given
         String userName = "라쿤";
         String testFileName = "test.pdf";
         byte[] content = "This is a test PDF content".getBytes();
         MockMultipartFile mockFile = new MockMultipartFile("file", testFileName, "application/pdf", content);
         fileService.createUserDirectory("라쿤");
 
-        // when
         String filePath = fileService.saveFile(mockFile, userName);
 
-        // then
         File savedFile = new File(filePath);
         assertTrue(savedFile.exists(), "The file should be saved successfully.");
         assertTrue(filePath.contains(userName), "The file path should include the user name.");
@@ -61,19 +58,16 @@ class FileServiceTest {
     }
 
     @Test
-    void PDF_삭제_확인() throws IOException {
-        // given
+    void PDF_삭제_확인() {
         String userName = "라쿤";
         String testFileName = "test.pdf";
         byte[] content = "This is a test PDF content".getBytes();
         MockMultipartFile mockFile = new MockMultipartFile("file", testFileName, "application/pdf", content);
         fileService.createUserDirectory("라쿤");
 
-        // when
         String filePath = fileService.saveFile(mockFile, userName);
         fileService.deleteFile(userName, testFileName);
 
-        // then
         File savedFile = new File(filePath);
         assertFalse(savedFile.exists(), "The file should be saved successfully.");
         fileService.deleteUserDirectory("라쿤");

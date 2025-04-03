@@ -16,7 +16,7 @@ import java.util.Date;
 import static science.workbook.config.jwt.JwtUtil.HALF_HOUR;
 import static science.workbook.config.jwt.JwtUtil.HEADER;
 import static science.workbook.config.jwt.JwtUtil.ONE_HOUR;
-import static science.workbook.config.jwt.JwtUtil.REFRESH_COUNT;
+import static science.workbook.config.jwt.JwtUtil.REFRESH_Id;
 import static science.workbook.config.jwt.JwtUtil.SUBJECT_ACCESS;
 import static science.workbook.config.jwt.JwtUtil.SUBJECT_REFRESH;
 import static science.workbook.config.jwt.JwtUtil.TOKEN_PREFIX;
@@ -71,7 +71,7 @@ public interface JwtCreator {
         String token = Jwts.builder()
                 .subject(SUBJECT_REFRESH)
                 .claim(USER_UUID, tokenDto.userId())
-                .claim(REFRESH_COUNT, tokenDto.refreshCount() + 1)
+                .claim(REFRESH_Id, tokenDto.refreshId())
                 .expiration(tokenExpiresIn)
                 .signWith(getKey())
                 .compact();

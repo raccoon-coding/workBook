@@ -6,7 +6,7 @@ public interface JwtUtil {
     String SUBJECT_ACCESS = "WorkBook_Access_Token";
     String SUBJECT_REFRESH = "WorkBook_Refresh_Token";
     String USER_UUID = "id";
-    String REFRESH_COUNT = "refreshCount";
+    String REFRESH_Id = "refreshId";
     Integer MAX_REFRESH = 10;
     int ONE_HOUR = 3_600_000;
     int HALF_HOUR = 1_800_000;

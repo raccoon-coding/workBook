@@ -3,15 +3,14 @@ package science.workbook.config.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import science.workbook.exception.token.InvalidRefreshTokenException;
-import science.workbook.exception.token.OverRefreshCountException;
-import science.workbook.exception.constant.ApiErrorMessage;
 
+import java.math.BigInteger;
 import java.util.Date;
 
-import static science.workbook.config.jwt.JwtUtil.MAX_REFRESH;
-import static science.workbook.config.jwt.JwtUtil.REFRESH_COUNT;
+import static science.workbook.config.jwt.JwtUtil.REFRESH_Id;
 import static science.workbook.config.jwt.JwtUtil.SUBJECT_REFRESH;
 import static science.workbook.config.jwt.JwtUtil.USER_UUID;
+import static science.workbook.exception.constant.ApiErrorMessage.다른_토큰;
 
 public interface RefreshToken extends JwtCreator {
     default String getRefreshUserPk(String token) {
@@ -21,14 +20,10 @@ public interface RefreshToken extends JwtCreator {
                 .toString();
     }
 
-    default Integer getRefreshCount(String token) {
-        Integer count = (Integer) verify(token, SUBJECT_REFRESH)
+    default BigInteger getRefreshId(String token) {
+        return (BigInteger) verify(token, SUBJECT_REFRESH)
                 .getPayload()
-                .get(REFRESH_COUNT);
-        if(count > MAX_REFRESH) {
-            throw new OverRefreshCountException(ApiErrorMessage.토큰_만료.getMessage());
-        }
-        return count;
+                .get(REFRESH_Id);
     }
 
     default Boolean validateRefreshToken(String token) {
@@ -38,7 +33,7 @@ public interface RefreshToken extends JwtCreator {
                     .getExpiration()
                     .before(new Date());
         } catch (Exception e) {
-            throw new InvalidRefreshTokenException(ApiErrorMessage.다른_토큰.getMessage());
+            throw new InvalidRefreshTokenException(다른_토큰);
         }
     }
 }
