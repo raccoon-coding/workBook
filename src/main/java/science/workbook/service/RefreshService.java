@@ -15,6 +15,7 @@ import science.workbook.dto.toService.SaveRefreshTokenDtoToService;
 import science.workbook.exception.token.InvalidRefreshTokenException;
 import science.workbook.repository.repositoryValid.RefreshRepositoryValid;
 
+import java.lang.annotation.Target;
 import java.math.BigInteger;
 
 import static science.workbook.exception.constant.ApiErrorMessage.재발급_토큰_에러;
@@ -43,6 +44,12 @@ public class RefreshService {
             return jwtProvider.createToken(new CreateTokenDtoToService(user.getId(), refreshId));
         }
         throw new InvalidRefreshTokenException(재발급_토큰_에러);
+    }
+
+    @Transactional
+    public void deleteRefresh(String deleteEmail) {
+        Refresh refresh = repository.findByEmail(deleteEmail);
+        repository.deleteToken(refresh);
     }
 
     @Async("refresh token save Async")

@@ -4,12 +4,12 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import org.springframework.security.core.Authentication;
 import science.workbook.exception.token.RefreshTokenRedirect;
-import science.workbook.exception.constant.ApiErrorMessage;
 
 import java.util.Date;
 
 import static science.workbook.config.jwt.JwtUtil.SUBJECT_ACCESS;
 import static science.workbook.config.jwt.JwtUtil.USER_UUID;
+import static science.workbook.exception.constant.ApiErrorMessage.토큰_재로그인;
 
 public interface AccessToken extends JwtCreator {
     Authentication getAuthentication(String token, Date iat);
@@ -28,7 +28,7 @@ public interface AccessToken extends JwtCreator {
                     .getExpiration()
                     .before(new Date());
         } catch (Exception e) {
-            throw new RefreshTokenRedirect(ApiErrorMessage.토큰_재로그인.getMessage());
+            throw new RefreshTokenRedirect(토큰_재로그인);
         }
     }
 

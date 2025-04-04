@@ -1,7 +1,10 @@
 package science.workbook.exception.token;
 
-public class ExpiredToken extends RuntimeException {
-    public ExpiredToken(String message) {
+import science.workbook.dto.api.ApiMessage;
+import science.workbook.exception.CustomException;
+
+public class ExpiredToken extends CustomException {
+    public ExpiredToken(ApiMessage message) {
         super(message);
     }
 }
