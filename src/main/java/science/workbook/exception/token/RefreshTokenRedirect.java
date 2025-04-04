@@ -1,7 +1,10 @@
 package science.workbook.exception.token;
 
-public class RefreshTokenRedirect extends RuntimeException {
-    public RefreshTokenRedirect(String message) {
+import science.workbook.dto.api.ApiMessage;
+import science.workbook.exception.CustomException;
+
+public class RefreshTokenRedirect extends CustomException {
+    public RefreshTokenRedirect(ApiMessage message) {
         super(message);
     }
 }

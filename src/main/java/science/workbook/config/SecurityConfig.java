@@ -39,7 +39,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/join", "/login", "/refresh", "/v3/api-docs/**", "/validEmail").permitAll()
+                        .requestMatchers("/join", "/login", "/refresh", "/validEmail", "/findUserEmail", "/findUserPassword").permitAll()
                         .requestMatchers("/user/**").hasAnyAuthority(student, teacher, academy)
                         .requestMatchers("/student/**").hasAnyAuthority(student)
                         .requestMatchers("/teacher/**").hasAnyAuthority(teacher, academy)

@@ -1,7 +1,10 @@
 package science.workbook.exception.token;
 
-public class NotHaveToken extends RuntimeException {
-    public NotHaveToken(String message) {
+import science.workbook.dto.api.ApiMessage;
+import science.workbook.exception.CustomException;
+
+public class NotHaveToken extends CustomException {
+    public NotHaveToken(ApiMessage message) {
         super(message);
     }
 }

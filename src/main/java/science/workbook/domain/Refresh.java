@@ -18,12 +18,12 @@ public class Refresh extends DateTime {
     @Id
     private BigInteger id;
     private String userName;
-    private String userEmail;
+    private String email;
     private String token;
 
     public Refresh(String userName, String email) {
         this.userName = userName;
-        this.userEmail = email;
+        this.email = email;
     }
 
     public void rotate(String token) {
