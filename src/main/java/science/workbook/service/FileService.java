@@ -8,19 +8,24 @@ import org.springframework.web.multipart.MultipartFile;
 import science.workbook.exception.service.file.ExistDirectory;
 import science.workbook.exception.service.file.FailSavePDF;
 import science.workbook.exception.service.file.NotExistDirectory;
+import science.workbook.service.constant.PdfConstant;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import static science.workbook.exception.constant.ApiErrorMessage.디렉토리_없음_에러;
 import static science.workbook.exception.constant.ApiErrorMessage.디렉토리_존재_에러;
 import static science.workbook.exception.message.FileMessage.PDF_저장_실패;
-import static science.workbook.service.PdfConstant.CREATE_DIRECTORY;
-import static science.workbook.service.PdfConstant.DELETE_DIRECTORY;
-import static science.workbook.service.PdfConstant.FAIL_CREATE_DIRECTORY;
-import static science.workbook.service.PdfConstant.FAIL_DELETE_DIRECTORY;
+import static science.workbook.service.constant.PdfConstant.CREATE_DIRECTORY;
+import static science.workbook.service.constant.PdfConstant.DELETE_DIRECTORY;
+import static science.workbook.service.constant.PdfConstant.FAIL_CREATE_DIRECTORY;
+import static science.workbook.service.constant.PdfConstant.FAIL_DELETE_DIRECTORY;
 
 @Slf4j @Service
 @Transactional(readOnly = true)
@@ -78,10 +83,29 @@ public class FileService {
     }
 
     private void deleteDirectory(File file) {
-        boolean isDeleteDirectory = file.delete();
-        if(isDeleteDirectory) {
-            log.info(DELETE_DIRECTORY);
+        Path directory = file.toPath();
+        if (!Files.exists(directory)) {
+            log.info(FAIL_DELETE_DIRECTORY);
             return;
+        }
+
+        try {
+            Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    Files.delete(file);
+                    return FileVisitResult.CONTINUE;
+                }
+
+                @Override
+                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                    Files.delete(dir);
+                    return FileVisitResult.CONTINUE;
+                }
+            });
+            log.info(DELETE_DIRECTORY);
+        } catch (IOException e) {
+            log.error(FAIL_DELETE_DIRECTORY, e);
         }
         log.info(FAIL_DELETE_DIRECTORY);
     }

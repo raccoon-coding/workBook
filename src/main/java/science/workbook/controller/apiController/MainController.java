@@ -75,16 +75,18 @@ public class MainController {
 
     @PostMapping("/validEmail")
     public Api<ApiMessage> validEmail(@Validated @RequestBody ValidEmailDto dto) {
-        if(mailService.validEmailCode(dto.getUserEmail(), dto.getCode()))
+        if(mailService.validEmailCode(dto.getUserEmail(), dto.getCode())) {
             return new Api<>(이메일_확인_성공);
+        }
         return new Api<>(이메일_코드_에러);
     }
 
     @PostMapping("/findUserEmail")
     public Api<ApiMessage> findUserEmail(@Validated @RequestBody FindUserEmailDto dto) {
         User user = userService.findByUserEmail(dto.getUserEmail());
-        if(userService.isEqualUserName(user, dto.getUserName()))
+        if(userService.isEqualUserName(user, dto.getUserName())) {
             return new Api<>(이메일_존재_성공);
+        }
 
         return new Api<>(유저찾기실패);
     }

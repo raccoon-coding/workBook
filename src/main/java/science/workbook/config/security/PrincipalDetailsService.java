@@ -13,6 +13,7 @@ import java.time.ZonedDateTime;
 import java.util.Date;
 
 import static java.time.LocalDateTime.now;
+import static science.workbook.exception.constant.ApiErrorMessage.토큰_재로그인;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ public class PrincipalDetailsService {
     public UserDetails loadUserByUserId(String userId, Date iat) throws UsernameNotFoundException {
         User user = repository.findByUserId(userId);
         if(iat.before(tranformdate())){
-            throw new ExpiredToken("토큰이 만료되었습니다. 다시 로그인해주세요.");
+            throw new ExpiredToken(토큰_재로그인);
         }
         return new PrincipalDetails(user);
     }

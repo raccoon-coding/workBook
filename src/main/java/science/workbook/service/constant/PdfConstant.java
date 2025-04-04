@@ -1,4 +1,4 @@
-package science.workbook.service;
+package science.workbook.service.constant;
 
 public abstract class PdfConstant {
     public static final String PDF = "pdf";

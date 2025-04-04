@@ -62,7 +62,9 @@ public class UserService {
     @Transactional
     public void changeUserPassword(ChangeUserPasswordDtoToService dto) {
         User user = dto.user();
-        if(!encoder.matches(user.getPassword(), dto.oldPassword())) throw new NotMatchPassword(비밀번호_변경_에러);
+        if(!encoder.matches(user.getPassword(), dto.oldPassword())) {
+            throw new NotMatchPassword(비밀번호_변경_에러);
+        }
 
         String newPassword = encoder.encode(dto.newPassword());
         user.changePassword(newPassword);

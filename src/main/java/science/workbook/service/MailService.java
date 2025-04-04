@@ -62,6 +62,12 @@ public class MailService {
     }
 
     @Transactional
+    public void deleteEmailType(String email) {
+        EmailType deleteEmailType = emailRepository.findEmailTypeByEmail(email);
+        emailRepository.deleteEmailType(deleteEmailType);
+    }
+
+    @Transactional
     public List<String> deleteEmailTypeByExpiresTimeBefore() {
         return emailRepository.deleteEmailTypeByExpiresTimeBefore(LocalDateTime.now());
     }
