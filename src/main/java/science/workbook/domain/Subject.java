@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigInteger;
@@ -16,6 +17,7 @@ import java.math.BigInteger;
 public class Subject extends DateTime {
     @Id
     private BigInteger id;
+    @Indexed(unique = true)
     private String subjectName;
 
     public Subject(String subjectName) {
