@@ -16,6 +16,7 @@ import science.workbook.config.jwt.JwtProvider;
 import science.workbook.config.security.SecurityProperties;
 
 import static science.workbook.domain.UserType.Academy;
+import static science.workbook.domain.UserType.Manager;
 import static science.workbook.domain.UserType.Student;
 import static science.workbook.domain.UserType.Teacher;
 
@@ -30,6 +31,7 @@ public class SecurityConfig {
     private final String student = Student.name();
     private final String teacher = Teacher.name();
     private final String academy = Academy.name();
+    private final String manager = Manager.name();
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -40,10 +42,11 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/join", "/login", "/refresh", "/validEmail", "/findUserEmail", "/findUserPassword").permitAll()
-                        .requestMatchers("/user/**").hasAnyAuthority(student, teacher, academy)
+                        .requestMatchers("/user/**").hasAnyAuthority(student, teacher, academy, manager)
                         .requestMatchers("/student/**").hasAnyAuthority(student)
                         .requestMatchers("/teacher/**").hasAnyAuthority(teacher, academy)
                         .requestMatchers("/academy/**").hasAuthority(academy)
+                        .requestMatchers("/manager/**").hasAuthority(manager)
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, securityProperties),

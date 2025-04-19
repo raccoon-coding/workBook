@@ -8,6 +8,7 @@ import science.workbook.domain.Subject;
 import science.workbook.repository.repositoryValid.GradleRepositoryValid;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +18,14 @@ public class GradleService {
 
     public List<Gradle> findAllGradle(Subject subject) {
         return repository.findAllGradleBySubject(subject);
+    }
+
+    public List<Gradle> findGradles(Subject subject, String startName, String endName) {
+        List<Gradle> gradleList = repository.findAllGradleBySubject(subject);
+        return gradleList.stream()
+                .filter(gradle -> gradle.getGradleName().compareToIgnoreCase(startName) >= 0 &&
+                        gradle.getGradleName().compareToIgnoreCase(endName) <= 0)
+                .collect(Collectors.toList());
     }
 
     @Transactional

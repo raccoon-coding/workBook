@@ -46,17 +46,39 @@
 `application.yml` 파일 예시:
 ```yaml
 spring:
+  application:
+    name: workbook
   data:
     mongodb:
-      uri: ${MONGO_URI}
+      host: ${Mongo_Host}
+      port: ${Mongo_Port}
+      url: ${MONGO_URI}
+      name: ${Mongo_Name}
+  jwt:
+    secretKey: ${JWT Key}
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${Google Email}
+    password: ${Google Password}
+    properties:
+      mail.smtp.debug: true
+      mail.smtp.auth: true
+      mail.smtp.connectiontimeout: 1000
+      mail.starttls.enable: true
+      mail.starttls.required: true
+      mail.smtp.timeout: 5000
+      mail.smtp.writetimeout: 5000
 
 openai:
-  api-key: ${OPENAI_API_KEY}
+  api:
+    key: ${OPENAI_API_KEY}
 ```
 .env 파일 예시:
 ```text
-MONGO_URI=mongodb://username:password@localhost:27017/dbname
-OPENAI_API_KEY=your-openai-key-here
+MONGODB_USER=mongo DB 아이디
+MONGODB_PASSWORD=mongoDB 비밀번호
+MONGODB_DATA_URL=데이터가 저장될 디렉토리 위치
 ```
 실제 서비스 실행 시에는 .env 또는 환경변수를 직접 주입하거나, CI/CD 파이프라인에서 별도로 관리해주세요.
 
