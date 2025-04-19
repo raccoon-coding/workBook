@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Getter
 @Document
 public abstract class UserTime implements Persistable<String> {
-    @Indexed
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate

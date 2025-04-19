@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import science.workbook.domain.EmailType;
-import science.workbook.domain.Refresh;
 import science.workbook.domain.User;
 import science.workbook.dto.api.Api;
 import science.workbook.dto.api.ApiMessage;
@@ -29,6 +27,7 @@ import science.workbook.dto.toService.SaveRefreshTokenDtoToService;
 import science.workbook.service.MailService;
 import science.workbook.service.RefreshService;
 import science.workbook.service.UserService;
+import science.workbook.service.facade.AuthFacadeService;
 
 import java.util.List;
 
@@ -49,20 +48,15 @@ public class MainController {
     private final UserService userService;
     private final RefreshService refreshService;
     private final MailService mailService;
+    private final AuthFacadeService authFacadeService;
 
     @PostMapping("/join")
     public Api<JoinCompleteDto> joinUserDefault(@Validated @RequestBody GetNewUserDto dto) {
-        if(userService.validUserEmailAndName(dto.getUserEmail(), dto.getUserName())){
+        if(userService.validUserEmailAndName(dto.getUserEmail(), dto.getUserName())) {
             return new Api<>(가입실패);
         }
 
-        EmailType emailType = mailService.createVerificationCode(dto.getUserEmail());
-        String content = mailService.setContextValidEmail(dto.getUserName(), emailType.getCode());
-        mailService.sendEmailNotice(emailType.getEmail(), "회원 가입 인증", content);
-        Refresh refresh = refreshService.createRefresh(dto.getUserName(), dto.getUserEmail());
-        User newUser = userService.createNewUser(dto, emailType, refresh);
-
-        JoinCompleteDto completeDto = new JoinCompleteDto(newUser);
+        JoinCompleteDto completeDto = authFacadeService.register(dto);
         return new Api<>(completeDto, 회원가입_성공);
     }
 
