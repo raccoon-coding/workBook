@@ -1,11 +1,9 @@
 package science.workbook.dto.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import science.workbook.domain.User;
 
 @Getter
-@AllArgsConstructor
 public class JoinCompleteDto {
     private final String userEmail;
     private final String username;

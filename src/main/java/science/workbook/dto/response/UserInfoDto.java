@@ -1,11 +1,9 @@
 package science.workbook.dto.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import science.workbook.domain.User;
 
 @Getter
-@AllArgsConstructor
 public class UserInfoDto {
     private final String userName;
     private final String userEmail;

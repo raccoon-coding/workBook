@@ -13,12 +13,8 @@ import science.workbook.dto.api.ApiMessage;
 import science.workbook.dto.request.ChangePasswordDto;
 import science.workbook.dto.response.UserInfoDto;
 import science.workbook.dto.toService.ChangeUserPasswordDtoToService;
-import science.workbook.exception.CustomException;
-import science.workbook.exception.controller.FailDeleteUserException;
-import science.workbook.service.FileService;
-import science.workbook.service.MailService;
-import science.workbook.service.RefreshService;
 import science.workbook.service.UserService;
+import science.workbook.service.facade.AuthFacadeService;
 
 import static science.workbook.dto.api.ApiServerMessage.비밀번호_변경_성공;
 import static science.workbook.dto.api.ApiServerMessage.유저정보_성공;
@@ -29,9 +25,7 @@ import static science.workbook.util.UserUtil.getUser;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-    private final FileService fileService;
-    private final RefreshService refreshService;
-    private final MailService mailService;
+    private final AuthFacadeService authFacadeService;
 
     @GetMapping("/info")
     public Api<UserInfoDto> getUserInfo() {
@@ -44,17 +38,8 @@ public class UserController {
     @DeleteMapping
     public Api<ApiMessage> deleteUser() {
         User deleteUser = getUser();
-        String deleteUserEmail = deleteUser.getEmail();
-        String deleteUserName = deleteUser.getName();
 
-        try {
-            mailService.deleteEmailType(deleteUserEmail);
-            refreshService.deleteRefresh(deleteUserEmail);
-            fileService.deleteUserDirectory(deleteUserName);
-            userService.deleteUser(deleteUser);
-        } catch (CustomException e) {
-            throw new FailDeleteUserException(e.getApiMessage());
-        }
+        authFacadeService.deleteUser(deleteUser);
 
         return new Api<>(회원탈퇴_성공);
     }
