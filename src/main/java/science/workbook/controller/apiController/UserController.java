@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import science.workbook.domain.Gradle;
 import science.workbook.domain.Subject;
@@ -33,7 +34,8 @@ import static science.workbook.dto.api.ApiServerMessage.유저정보_성공;
 import static science.workbook.dto.api.ApiServerMessage.회원탈퇴_성공;
 import static science.workbook.util.UserUtil.getUser;
 
-@RestController("/user")
+@RestController
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
