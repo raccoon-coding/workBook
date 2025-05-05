@@ -7,8 +7,11 @@ import com.itextpdf.layout.element.Paragraph;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import science.workbook.dto.toController.CustomMultipartFile;
+import science.workbook.exception.service.file.FailSavePDF;
 
 import java.io.ByteArrayOutputStream;
+
+import static science.workbook.exception.constant.ApiErrorMessage.PDF_저장_에러;
 
 @Service
 public class PdfTransferService {
@@ -23,7 +26,7 @@ public class PdfTransferService {
 
             return outputStream.toByteArray();
         } catch (Exception e) {
-            throw new RuntimeException("PDF 생성 실패", e);
+            throw new FailSavePDF(PDF_저장_에러);
         }
     }
 

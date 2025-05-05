@@ -2,10 +2,15 @@ package science.workbook.controller.apiController;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import science.workbook.domain.Gradle;
 import science.workbook.domain.Subject;
@@ -15,26 +20,31 @@ import science.workbook.dto.request.CreateGradleDto;
 import science.workbook.dto.request.CreateSubjectDto;
 import science.workbook.dto.request.DeleteGradleDto;
 import science.workbook.dto.request.DeleteSubjectDto;
+import science.workbook.dto.response.LogsDto;
 import science.workbook.exception.repository.ExistGradle;
 import science.workbook.exception.repository.NotFoundSubjectByName;
 import science.workbook.service.GradleService;
+import science.workbook.service.LogService;
 import science.workbook.service.SubjectService;
 
 import java.util.List;
 
 import static science.workbook.dto.api.ApiServerMessage.과목_삭제_성공;
 import static science.workbook.dto.api.ApiServerMessage.과목_추가_성공;
+import static science.workbook.dto.api.ApiServerMessage.로그_페이징_성공;
 import static science.workbook.dto.api.ApiServerMessage.목차_삭제_성공;
 import static science.workbook.dto.api.ApiServerMessage.목차_생성_성공;
 import static science.workbook.exception.constant.ApiErrorMessage.과목_없음_에러;
 import static science.workbook.exception.constant.ApiErrorMessage.과목_존재_에러;
 
 @Slf4j
-@RestController("/manager")
+@RestController
+@RequestMapping("/manager")
 @RequiredArgsConstructor
 public class ManagerController {
     private final GradleService gradleService;
     private final SubjectService subjectService;
+    private final LogService logService;
 
     @PostMapping("/gradle")
     public Api<ApiMessage> createGradle(@Validated @RequestBody CreateGradleDto dto) {
@@ -71,5 +81,11 @@ public class ManagerController {
             return new Api<>(과목_삭제_성공);
         }
         throw new NotFoundSubjectByName(과목_없음_에러);
+    }
+
+    @GetMapping("/log")
+    public Api<Slice<LogsDto>> getLog(@PageableDefault(size = 20) Pageable pageable) {
+        Slice<LogsDto> logs = logService.getLogsAsDto(pageable);
+        return new Api<>(logs, 로그_페이징_성공);
     }
 }

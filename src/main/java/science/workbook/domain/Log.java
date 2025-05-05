@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import science.workbook.dto.toService.CreateLogDtoToService;
 
@@ -16,16 +17,17 @@ import java.math.BigInteger;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class Log extends DateTime {
     @Id
+    @Indexed
     private BigInteger id;
     private String userId;
     private String logData;
     private String requestUrl;
-    private String errorMessage;
+    private String message;
 
     public Log(CreateLogDtoToService dto) {
         this.userId = dto.userId();
         this.logData = dto.body();
         this.requestUrl = dto.url();
-        this.errorMessage = dto.errorMessage();
+        this.message = dto.message();
     }
 }
