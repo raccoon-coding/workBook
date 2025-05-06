@@ -17,6 +17,6 @@ public class LogRepositoryValid {
     }
 
     public Slice<Log> getPagingLogs(Pageable pageable) {
-        return repository.findAll(pageable);
+        return repository.findAllByOrderByCreatedAtDesc(pageable);
     }
 }
